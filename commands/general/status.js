@@ -38,11 +38,11 @@ module.exports = {
         let color = 0x00ff00
 
         const services = [
-            { name: 'Strona WWW', ip: 'amperhost.pl', port: 80, emoji: '- ' },
-            { name: 'Panel', ip: 'panel.amperhost.pl', port: 80, emoji: '- ' },
+            { name: 'Strona WWW', ip: 'amperhost.pl', port: 80 },
+            { name: 'Panel', ip: 'dash.amperhost.pl', port: 80 },
             {
-                name: 'Węzeł PL-01',
-                ip: 'pl01.amperhost.pl',
+                name: 'Węzeł N1',
+                ip: 'n1.amperhost.pl',
                 port: 8080,
                 emoji: '- ',
             },
@@ -54,9 +54,9 @@ module.exports = {
                     service.ip,
                     service.port,
                 )
-                desc += `${service.emoji} ${service.name}: ✅ Online (${responseTime} ms)\n`
+                desc += `- ${service.name}: ✅ Online (${responseTime} ms)\n`
             } catch (error) {
-                desc += `${service.emoji} ${service.name}: ❌ - Offline\n`
+                desc += `- ${service.name}: ❌ - Offline\n`
                 color = 0xff0000
             }
         }
