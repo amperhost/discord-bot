@@ -44,7 +44,6 @@ module.exports = {
         name: 'Węzeł N1',
         ip: 'n1.amperhost.pl',
         port: 8080,
-        emoji: '- ',
       },
     ]
 
