@@ -62,7 +62,7 @@ module.exports = {
         embeds: [
           {
             title: 'Zgłoszenia',
-            description: `Ticket **${interaction.channel.name}** został zamknięty przez ${interaction.user}.\nPoniżej znajdują się jego logi!`,
+            description: `Ticket **${interaction.channel.name}** został zamknięty przez ${interaction.user}.\nPowyżej znajdują się jego logi!`,
             color: Colors.Blurple,
             footer: {
               text: '© 2024 AmperHost',
