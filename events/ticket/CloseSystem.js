@@ -1,3 +1,4 @@
+// Import required modules
 const {
   ActionRowBuilder,
   ButtonBuilder,
@@ -12,20 +13,17 @@ module.exports = {
   name: 'interactionCreate',
   once: false,
   execute: async (interaction, client) => {
+    // Check if the interaction is a button
     if (!interaction.isButton()) return
 
+    // Handle ticket closure
     if (interaction.customId === 'close') {
-      interaction.reply({
-        content: `Ten ticket zostanie usunięty.`,
-        ephemeral: true,
-      })
-
+      // Prompt for saving logs
       interaction.channel.send({
         embeds: [
           {
             title: 'Pytanie',
-            description:
-              'Ten ticket zostanie usunięty. Czy chcesz zapisać jego logi?',
+            description: 'Czy chcesz zapisać logi tego ticketa?',
             color: Colors.Blurple,
             footer: {
               text: '© 2024 AmperHost',
@@ -47,6 +45,7 @@ module.exports = {
         ],
       })
     } else if (interaction.customId === 'yes') {
+      // Save ticket logs to the designated channel
       const ticketLogsChannel = client.channels.cache.get(
         process.env.TICKET_LOGS,
       )
@@ -66,6 +65,7 @@ module.exports = {
         files: [await transcript.createTranscript(interaction.channel)],
       })
 
+      // Send closure confirmation message
       await interaction.channel.send({
         embeds: [
           {
@@ -80,9 +80,11 @@ module.exports = {
         ],
       })
 
+      // Delete the ticket channel
       await interaction.channel.delete()
     } else if (interaction.customId === 'no') {
-      interaction.channel.send({
+      // Send closure confirmation message without saving logs
+      await interaction.channel.send({
         embeds: [
           {
             title: 'Zgłoszenia',
@@ -96,6 +98,7 @@ module.exports = {
         ],
       })
 
+      // Delete the ticket channel
       await interaction.channel.delete()
     }
   },

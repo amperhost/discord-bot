@@ -1,17 +1,22 @@
+// Import required modules
 const { SlashCommandBuilder, EmbedBuilder, version } = require('discord.js')
 const { version: botVersion } = require('../../package.json')
 const os = require('os')
 
 module.exports = {
+  // Define the command data
   data: new SlashCommandBuilder()
     .setName('botinfo')
     .setDescription('Wyświetla informacje o bocie.'),
+
+  // Execute function for the command
   async execute(interaction) {
     const client = interaction.client
     const botUptime = Math.floor(client.uptime / 1000)
     const serverCount = client.guilds.cache.size
     const memberCount = client.users.cache.size
 
+    // Function to generate a random color
     function generate_color() {
       return [
         Math.floor(Math.random() * 255),
@@ -20,22 +25,15 @@ module.exports = {
       ]
     }
 
+    // Create an embed to display bot information
     const embed = new EmbedBuilder()
       .setColor(generate_color())
-      .setTitle(`Informacje o ${client.user.username}`)
+      .setTitle(`🤖 Informacje o ${client.user.username}`)
       .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
       .addFields(
         { name: 'Wersja bota', value: botVersion, inline: false },
-        {
-          name: 'Wersja Discord.js',
-          value: `v${version}`,
-          inline: false,
-        },
-        {
-          name: 'Wersja Node.js',
-          value: process.version,
-          inline: false,
-        },
+        { name: 'Wersja Discord.js', value: `v${version}`, inline: false },
+        { name: 'Wersja Node.js', value: process.version, inline: false },
         {
           name: 'Uptime',
           value: `<t:${Math.floor(Date.now() / 1000 - botUptime)}:R>`,
@@ -66,6 +64,6 @@ module.exports = {
       })
       .setTimestamp()
 
-    await interaction.reply({ embeds: [embed] })
+    await interaction.reply({ embeds: [embed] }) // Reply with the embed
   },
 }
