@@ -1,5 +1,7 @@
 // Import required modules
 const { readdirSync } = require('fs')
+const { Routes } = require('discord-api-types/v9')
+const { REST } = require('@discordjs/rest')
 
 // Export a function that takes the client as an argument
 module.exports = (client) => {

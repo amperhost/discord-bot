@@ -4,6 +4,7 @@ const { exec } = require('child_process')
 const { GITHUB_CHANNEL, TICKET_CHANNEL } = require('../../config.js')
 
 require('dotenv').config()
+require('colors')
 
 module.exports = {
   name: 'ready',
@@ -71,22 +72,26 @@ module.exports = {
       components: [new ActionRowBuilder().addComponents(selectMenu)],
     })
 
-    // Set up a timer to periodically pull updates from GitHub
+    // Automatic 30 second git pull
     setInterval(() => {
-      exec(`git pull`, (error, stdout) => {
-        const response = error || stdout
-        if (!error) {
-          if (!response.includes('Already up to date.')) {
-            if (GITHUB_CHANNEL) {
-              GITHUB_CHANNEL.send(
-                `Automatyczny update z GitHuba, pobieram pliki.\n\`\`\`${response}\`\`\``,
-              )
-            }
-            // Exit the process after a short delay
-            setTimeout(() => {
-              process.exit()
-            }, 1000)
-          }
+      exec(`git pull`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error executing git pull: ${error.message}`)
+          return
+        }
+
+        if (!stdout.includes('Already up to date.')) {
+          client.channels.cache
+            .get(GITHUB_CHANNEL)
+            .send(
+              `<t:${Math.floor(
+                Date.now() / 1000,
+              )}:f> Automaatyczny update z GitHuba, pobieram pliki.\n\`\`\`${stdout}\`\`\``,
+            )
+
+          setTimeout(() => {
+            process.exit()
+          }, 1000)
         }
       })
     }, 30000)
