@@ -28,7 +28,7 @@ module.exports = {
       })
       .setTitle('🏓 pong!') // Add title
       .setDescription(
-        `- **Opóźnienie:** ${ping} ms\n**- Websocket:** ${interaction.client.ws.ping} ms`,
+        `Client: **${ping}ms** | Websocket: **${interaction.client.ws.ping}ms**`,
       )
       .setTimestamp() // Set the current timestamp
       .setColor(randomColor) // Set the random color
