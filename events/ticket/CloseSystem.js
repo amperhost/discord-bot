@@ -51,13 +51,6 @@ module.exports = {
         process.env.TICKET_LOGS,
       )
 
-      if (!ticketLogsChannel) {
-        console.error(
-          `[ERROR] Nie odnaleziono kanału z logami ticketów o ID ${process.env.TICKET_LOGS}.`,
-        )
-        return
-      }
-
       await ticketLogsChannel.send({
         embeds: [
           {

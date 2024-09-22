@@ -69,7 +69,7 @@ for (const folder of commandFolders) {
       client.commands.set(command.data.name, command)
     } else {
       console.log(
-        `[WARNING] W komendze ${filePath} brakuje właściwości "data" lub "execute".`,
+        `[WARNING] ${filePath} command is missing "data" or "execute" property.`,
       )
     }
   }
@@ -81,14 +81,13 @@ client.on(Events.InteractionCreate, async (interaction) => {
   const command = client.commands.get(interaction.commandName)
 
   if (!command) {
-    console.error(`Nie znaleziono komendy: ${interaction.commandName}.`)
     return
   }
 
   try {
     await command.execute(interaction)
   } catch (error) {
-    console.error(error)
+    console.log(`[ERROR] ${error}`.red)
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({
         content: 'Wystąpił błąd podczas wykonywania komendy.',

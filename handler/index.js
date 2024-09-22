@@ -15,7 +15,7 @@ module.exports = (client) => {
         client.on(event.name, (...args) => event.execute(...args, client))
         console.log(
           `[EVENTS]`.bold.red +
-            ` Ładowanie eventu :`.bold.white +
+            ` Loading event :`.bold.white +
             ` ${event.name}`.bold.red,
         )
       }

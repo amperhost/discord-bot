@@ -112,19 +112,19 @@ module.exports = {
 
     let ticket_type = ''
     switch (interaction.values[0]) {
-      case 'ogolne':
+      case 'general':
         await createTicketChannel('Pomoc ogólna')
         ticket_type = 'Pomoc ogólna'
         break
-      case 'platnosci':
+      case 'payments':
         await createTicketChannel('Płatności')
         ticket_type = 'Płatności'
         break
-      case 'wspolpraca':
+      case 'partnership':
         await createTicketChannel('Współpraca')
         ticket_type = 'Współpraca'
         break
-      case 'inne':
+      case 'other':
         await createTicketChannel('Żadne z powyższych')
         ticket_type = 'Żadne z powyższych'
         break

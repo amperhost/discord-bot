@@ -1,27 +1,23 @@
-const colors = require('colors')
-const config = require('../../config.js')
 const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
+const { exec } = require('child_process')
+const { GITHUB_CHANNEL, TICKET_CHANNEL } = require('../../config.js')
+
+require('dotenv').config()
 
 module.exports = {
   name: 'ready',
   once: false,
   execute: async (client) => {
-    console.log(
-      `[READY] ${client.user.tag} (${client.user.id}) jest gotowy!`.green,
-    )
+    console.log(`[READY] Connected to websocket as ${client.user.tag}!`.green)
 
-    let channelTicket = client.channels.cache.get(config.TICKET_CHANNEL)
+    let channelTicket = client.channels.cache.get(TICKET_CHANNEL)
     const color = parseInt('08f4ff', 16)
-
     const messages = await channelTicket.messages.fetch({ limit: 20 })
-
     const oldEmbedMessage = messages.find(
       (msg) => msg.embeds.length > 0 && msg.embeds[0].title === 'Zgłoszenia',
     )
-
     if (oldEmbedMessage) {
       await oldEmbedMessage.delete()
-      console.log('[INFO] Stary embed został usunięty.'.yellow)
     }
 
     const selectMenu = new StringSelectMenuBuilder()
@@ -30,22 +26,22 @@ module.exports = {
       .addOptions([
         {
           label: 'Pomoc ogólna',
-          value: 'ogolne',
+          value: 'general',
           emoji: '🐛',
         },
         {
           label: 'Płatności',
-          value: 'platnosci',
+          value: 'payments',
           emoji: '💰',
         },
         {
           label: 'Współpraca',
-          value: 'wspolpraca',
+          value: 'partnership',
           emoji: '💼',
         },
         {
           label: 'Żadne z powyższych',
-          value: 'inne',
+          value: 'other',
           emoji: '📁',
         },
       ])
@@ -66,6 +62,22 @@ module.exports = {
       components: [new ActionRowBuilder().addComponents(selectMenu)],
     })
 
-    console.log('[INFO] Nowy embed został wysłany.'.yellow)
+    setInterval(() => {
+      exec(`git pull`, (error, stdout) => {
+        let response = error || stdout
+        if (!error) {
+          if (!response.includes('Already up to date.')) {
+            if (GITHUB_CHANNEL) {
+              GITHUB_CHANNEL.send(
+                `Automatyczny update z GitHuba, pobieram pliki.\n\`\`\`${response}\`\`\``,
+              )
+            }
+            setTimeout(() => {
+              process.exit()
+            }, 1000)
+          }
+        }
+      })
+    }, 30000)
   },
 }
