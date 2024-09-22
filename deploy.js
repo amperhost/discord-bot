@@ -1,5 +1,5 @@
 // Import required modules
-const { REST } = require('discord.js') // Only REST is needed
+const { REST, Routes } = require('discord.js')
 const fs = require('node:fs')
 const path = require('node:path')
 const { TOKEN, CLIENT_ID } = require('./config.js')
@@ -51,10 +51,8 @@ const rest = new REST().setToken(TOKEN)
     })
 
     // Log success message with bold styling
-    console.log(
-      `Successfully refreshed ${data.length} slash (/) commands globally.`.bold,
-    )
+    console.log(`Successfully refreshed ${data.length} slash (/) commands.`)
   } catch (error) {
-    console.error(`[ERROR] ${error.message}`) // Log error message
+    console.error(error) // Log error message
   }
 })()

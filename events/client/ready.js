@@ -86,7 +86,7 @@ module.exports = {
             .send(
               `<t:${Math.floor(
                 Date.now() / 1000,
-              )}:f> Automatyczny update z GitHuba, pobieram pliki.\n\`\`\`${stdout}\`\`\``,
+              )}:f> Automatyczna aktualizacja z GitHuba, pobieram pliki...\n\`\`\`${stdout}\`\`\``,
             )
 
           setTimeout(() => {
