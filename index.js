@@ -9,7 +9,7 @@ const {
   ActivityType,
   Partials,
 } = require('discord.js')
-const { TOKEN } = require('./config.js')
+const { TOKEN, REACT_CHANNEL } = require('./config.js')
 
 // Load environment variables from .env file
 require('dotenv').config()
