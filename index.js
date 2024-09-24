@@ -134,5 +134,15 @@ process.on('unhandledRejection', (error) => {
   console.log(`[ERROR] ${error.message}`.red) // Log error message
 })
 
+client.on('messageCreate', async (message) => {
+  try {
+    if (message.channelId === REACT_CHANNEL) {
+      await message.react('❤️')
+    }
+  } catch (error) {
+    console.error(`[ERROR] ${error.message}`)
+  }
+})
+
 // Log the bot in using the token from config.js
 client.login(TOKEN)

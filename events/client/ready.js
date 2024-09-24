@@ -1,20 +1,10 @@
 // Import required modules
 const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 const { exec } = require('child_process')
-const { GITHUB_CHANNEL, TICKET_CHANNEL, REACT_CHANNEL } = require('../../config.js')
+const { GITHUB_CHANNEL, TICKET_CHANNEL } = require('../../config.js')
 
 require('dotenv').config()
 require('colors')
-
-module.exports = {
-  name: 'messageCreate',
-  once: false,
-  execute: async (message) => {
-    if (message.channelId === '1284585018580275231') {
-      await message.react('❤️');
-    }
-  },
-};
 
 module.exports = {
   name: 'ready',
