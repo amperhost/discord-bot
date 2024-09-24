@@ -10,7 +10,7 @@ module.exports = {
   name: 'messageCreate',
   once: false,
   execute: async (message) => {
-    if (message.channelId === REACT_CHANNEL) {
+    if (message.channelId === '1284585018580275231') {
       await message.react('❤️');
     }
   },
