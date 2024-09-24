@@ -9,4 +9,5 @@ module.exports = {
   TICKET_LOGS: process.env.TICKET_LOGS,
   SUPPORT_TEAM: process.env.SUPPORT_TEAM,
   BLACKLIST_ROLE: process.env.BLACKLIST_ROLE,
+  REACT_CHANNEL: process.env.REACT_CHANNEL,
 }
