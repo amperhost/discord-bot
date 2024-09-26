@@ -1,8 +1,4 @@
-// Import required modules
 const {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
   Colors,
 } = require('discord.js')
 const transcript = require('discord-html-transcripts')
@@ -19,6 +15,11 @@ module.exports = {
 
     // Handle ticket closure
     if (interaction.customId === 'close') {
+      await interaction.reply({
+        content: 'Ticket zostanie zamknięty za 5 sekund. Logi zostały zapisane.',
+        ephemeral: true,
+      });
+
       // Automatically save ticket logs to the designated channel
       await client.channels.cache.get(TICKET_LOGS).send({
         embeds: [
