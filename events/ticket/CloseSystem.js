@@ -19,36 +19,8 @@ module.exports = {
 
     // Handle ticket closure
     if (interaction.customId === 'close') {
-      // Prompt for saving logs
-      interaction.channel.send({
-        embeds: [
-          {
-            title: 'Pytanie',
-            description: 'Czy chcesz zapisać logi tego ticketa?',
-            color: Colors.Blurple,
-            footer: {
-              text: '© 2024 AmperHost',
-              iconURL: client.user.displayAvatarURL(),
-            },
-          },
-        ],
-        components: [
-          new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-              .setCustomId('yes')
-              .setLabel('Tak')
-              .setStyle(ButtonStyle.Success),
-            new ButtonBuilder()
-              .setCustomId('no')
-              .setLabel('Nie')
-              .setStyle(ButtonStyle.Danger),
-          ),
-        ],
-      })
-    } else if (interaction.customId === 'yes') {
-      // Save ticket logs to the designated channel
-
-      await TICKET_LOGS.send({
+      // Automatically save ticket logs to the designated channel
+      await client.channels.cache.get(TICKET_LOGS).send({
         embeds: [
           {
             title: 'Zgłoszenia',
@@ -63,12 +35,12 @@ module.exports = {
         files: [await transcript.createTranscript(interaction.channel)],
       })
 
-      // Send closure confirmation message
+      // Send closure confirmation message with 5-second delay before channel deletion
       await interaction.channel.send({
         embeds: [
           {
             title: 'Zgłoszenia',
-            description: `Ticket został zamknięty przez ${interaction.user}.`,
+            description: `Ticket zostanie automatycznie zamknięty za 5 sekund.`,
             color: Colors.Blurple,
             footer: {
               text: '© 2024 AmperHost',
@@ -78,26 +50,10 @@ module.exports = {
         ],
       })
 
-      // Delete the ticket channel
-      await interaction.channel.delete()
-    } else if (interaction.customId === 'no') {
-      // Send closure confirmation message without saving logs
-      await interaction.channel.send({
-        embeds: [
-          {
-            title: 'Zgłoszenia',
-            description: `Ticket został zamknięty przez ${interaction.user}.`,
-            color: Colors.Blurple,
-            footer: {
-              text: '© 2024 AmperHost',
-              iconURL: client.user.displayAvatarURL(),
-            },
-          },
-        ],
-      })
-
-      // Delete the ticket channel
-      await interaction.channel.delete()
+      // Wait for 5 seconds
+      setTimeout(async () => {
+        await interaction.channel.delete()
+      }, 5000)
     }
   },
 }
