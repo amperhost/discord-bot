@@ -6,6 +6,7 @@ const {
   Colors,
 } = require('discord.js')
 const transcript = require('discord-html-transcripts')
+const { TICKET_LOGS } = require('../../config.js')
 
 require('dotenv').config()
 
@@ -46,11 +47,8 @@ module.exports = {
       })
     } else if (interaction.customId === 'yes') {
       // Save ticket logs to the designated channel
-      const ticketLogsChannel = client.channels.cache.get(
-        process.env.TICKET_LOGS,
-      )
 
-      await ticketLogsChannel.send({
+      await TICKET_LOGS.send({
         embeds: [
           {
             title: 'Zgłoszenia',
